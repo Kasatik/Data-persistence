@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 public class PersistenceData : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class PersistenceData : MonoBehaviour
 
     public Data data;
     string path;
+    string PlayerName;
 
     private void Awake()
     {
@@ -25,6 +26,8 @@ public class PersistenceData : MonoBehaviour
         path = Application.persistentDataPath + "/scoredata.json";
 
         LoadData();
+
+        PlayerName = "";
     }
 
     public void AddScore(ScoreData data)
@@ -33,7 +36,8 @@ public class PersistenceData : MonoBehaviour
 
         SaveData();
     }
-
+    public void SetPlayerName(string text) => this.PlayerName = text;
+    public string GetPlayerName() => PlayerName;
     public ScoreData GetHighScore()
     {
         if (data.Count == 0)
@@ -72,6 +76,13 @@ public class PersistenceData : MonoBehaviour
 
         LoadData();
     }
+
+    internal void SaveScore(ScoreData data)
+    {
+        this.data.AddPlayerScore(data);
+
+        SaveData();
+    }
 }
     
 [Serializable]
@@ -104,4 +115,20 @@ public class Data
     public void Sort() => this.data.Sort();
 
     public ScoreData GetHighScore() => this.data[0];
+
+    public void AddPlayerScore(ScoreData score)
+    {
+        Debug.Log($"Adding new score {score}");
+        if( data.Any(element => element.name == score.name))
+        {
+            Debug.Log($"Data have player with name {score.name} and old score {score.score}");
+            ScoreData element = data.FirstOrDefault(el => el.name == score.name);
+            if (element.score > score.score)
+                return;
+
+            element.score = score.score;
+        }
+        else
+            data.Add(score);
+    }
 }

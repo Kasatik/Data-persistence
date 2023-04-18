@@ -15,7 +15,10 @@ public class UIMainMenu : MonoBehaviour
     private void Start()
     {
         DisplayHighScore();
+        DisplayPlayerName();
     }
+
+    private void DisplayPlayerName() => inputFieldName.text = PersistenceData.Instance.GetPlayerName();
 
     private void DisplayHighScore()
     {
@@ -30,6 +33,9 @@ public class UIMainMenu : MonoBehaviour
 
     public void OnStartClicked() => SceneManager.LoadScene(1);
 
+    public void OnHighScoreClicked() => SceneManager.LoadScene(2);
+
+    public void OnSettingClicked() => SceneManager.LoadScene(3);    
     public void OnQuitClicked()
     {
         SaveData();
@@ -48,14 +54,5 @@ public class UIMainMenu : MonoBehaviour
     }
     private void SaveData() => PersistenceData.Instance.SaveData();
 
-    public void OnNameChanged()
-    {
-        ScoreData data = new ScoreData();
-        data.name = inputFieldName.text;
-        data.score = 0;
-        
-        PersistenceData.Instance.AddScore(data);
-
-        DisplayHighScore();
-    }
+    public void OnNameChanged() => PersistenceData.Instance.SetPlayerName(inputFieldName.text);
 }
