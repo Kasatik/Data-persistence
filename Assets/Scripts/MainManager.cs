@@ -19,7 +19,7 @@ public class MainManager : MonoBehaviour
     private int m_Points;
     
     private bool m_GameOver = false;
-    
+    private float difficulty = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +43,27 @@ public class MainManager : MonoBehaviour
         DisplayHighScore();
         DisplayPlayerName();
         SetVolume();
+        
+        SetDifficulty();
+    }
+
+    private void SetDifficulty()
+    {
+        switch(PersistenceData.Instance.GetDifficultySetting())
+        {
+            case Difficulty.Easy:
+                difficulty = 1f;
+                break;
+            case Difficulty.Medium:
+                difficulty = 1.6f;
+                break;
+            case Difficulty.Hard:
+                difficulty = 2.3f;
+                break;
+            default:
+                difficulty = 1f;
+                break;
+        }
     }
 
     private void SetVolume()
@@ -77,7 +98,7 @@ public class MainManager : MonoBehaviour
                 forceDir.Normalize();
 
                 Ball.transform.SetParent(null);
-                Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
+                Ball.AddForce(forceDir * 2.0f * difficulty, ForceMode.VelocityChange);
             }
         }
         else if (m_GameOver)

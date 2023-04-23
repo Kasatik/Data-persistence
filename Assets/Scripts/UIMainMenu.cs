@@ -52,10 +52,11 @@ public class UIMainMenu : MonoBehaviour
     {
         SaveData();
 
-        if(Application.isEditor)
+        #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
-        else
-            Application.Quit();
+        #else
+        Application.Quit();
+        #endif
     }
 
     public void OnClearData()

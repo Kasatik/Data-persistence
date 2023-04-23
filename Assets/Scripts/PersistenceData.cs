@@ -47,7 +47,7 @@ public class PersistenceData : MonoBehaviour
 
         AddScore(data);
     }
-
+    public Difficulty GetDifficultySetting() => this.data.settings.difficulty;
     public string GetPlayerName() => PlayerName;
     public ScoreData GetHighScore()
     {
@@ -60,7 +60,6 @@ public class PersistenceData : MonoBehaviour
     }
     public void LoadData()
     {
-        Debug.Log("Load data");
         if(File.Exists(path))
         {
             string json = File.ReadAllText(path);
@@ -69,7 +68,7 @@ public class PersistenceData : MonoBehaviour
 
             return;
         }
-        Debug.Log("Creating data");
+
         data = new Data();
     }
     public void SaveData()
@@ -86,7 +85,8 @@ public class PersistenceData : MonoBehaviour
     {
         File.Delete(path);
         PlayerName = "";
-        LoadData();
+
+        data = new Data();
     }
 
     internal void SaveScore(ScoreData data)
