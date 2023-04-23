@@ -1188,6 +1188,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 492606249}
   m_CullTransparentMesh: 1
+--- !u!1 &559516383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 559516386}
+  - component: {fileID: 559516385}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &559516385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559516383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e48571ecdbdf834ba8afcd38dc2fb25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 8300000, guid: 812fec07e014c944eb9ad600cff24d39, type: 3}
+  soundEffect: {fileID: 8300000, guid: e74123a9b4f292c4c8d108f00c18bce6, type: 3}
+--- !u!4 &559516386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559516383}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &596281551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,7 +1455,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1775889875}
         m_TargetAssemblyTypeName: UIMainMenu, Assembly-CSharp
-        m_MethodName: OnHighScoreClicked
+        m_MethodName: OnSettingClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1541,6 +1587,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     data: []
+    settings:
+      soundVolume: 1
+      musicVolume: 1
+      difficulty: 0
 --- !u!4 &1040741243
 Transform:
   m_ObjectHideFlags: 0

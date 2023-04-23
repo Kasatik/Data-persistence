@@ -36,7 +36,18 @@ public class PersistenceData : MonoBehaviour
 
         SaveData();
     }
-    public void SetPlayerName(string text) => this.PlayerName = text;
+
+    public void SetPlayerName(string text)
+    {
+        this.PlayerName = text;
+
+        ScoreData data = new ScoreData();
+        data.name = PlayerName;
+        data.score = 0;
+
+        AddScore(data);
+    }
+
     public string GetPlayerName() => PlayerName;
     public ScoreData GetHighScore()
     {
@@ -49,6 +60,7 @@ public class PersistenceData : MonoBehaviour
     }
     public void LoadData()
     {
+        Debug.Log("Load data");
         if(File.Exists(path))
         {
             string json = File.ReadAllText(path);
@@ -57,7 +69,7 @@ public class PersistenceData : MonoBehaviour
 
             return;
         }
-
+        Debug.Log("Creating data");
         data = new Data();
     }
     public void SaveData()
@@ -73,7 +85,7 @@ public class PersistenceData : MonoBehaviour
     public void ClearData()
     {
         File.Delete(path);
-
+        PlayerName = "";
         LoadData();
     }
 
@@ -83,6 +95,8 @@ public class PersistenceData : MonoBehaviour
 
         SaveData();
     }
+
+    public void SaveSettings() => SaveData();
 }
     
 [Serializable]
@@ -101,13 +115,31 @@ public class ScoreData : IComparable<ScoreData>
         return name + " " + score;
     }
 }
+[Serializable]
+public class SettingsData
+{
+    public float soundVolume;
+    public float musicVolume;
+    public Difficulty difficulty;
+
+    public SettingsData()
+    {
+        soundVolume = 1.0f;
+        musicVolume = 1.0f;
+        difficulty = Difficulty.Easy;
+    }
+}
 
 [Serializable]
 public class Data
 {
     public List<ScoreData> data;
-
-    public Data() => this.data = new List<ScoreData>();
+    public SettingsData settings;
+    public Data()
+    {
+        this.data = new List<ScoreData>();
+        settings = new SettingsData();
+    }
 
     public int Count { get { return data.Count; } }
     internal void AddData(ScoreData data) => this.data.Add(data);

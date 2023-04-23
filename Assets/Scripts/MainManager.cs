@@ -14,12 +14,11 @@ public class MainManager : MonoBehaviour
     public Text bestScoreText;
 
     public GameObject GameOverText;
-    
+
     private bool m_Started = false;
     private int m_Points;
     
     private bool m_GameOver = false;
-
     
     // Start is called before the first frame update
     void Start()
@@ -36,12 +35,23 @@ public class MainManager : MonoBehaviour
                 var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
                 brick.PointValue = pointCountArray[i];
                 brick.onDestroyed.AddListener(AddPoint);
+
+                brick.onDestroyed.AddListener(PlaySound);
             }
         }
 
         DisplayHighScore();
         DisplayPlayerName();
+        SetVolume();
     }
+
+    private void SetVolume()
+    {
+        SoundManager.Instance.SetMusicVolume(PersistenceData.Instance.data.settings.musicVolume);
+        SoundManager.Instance.SetSoundEffectVolume(PersistenceData.Instance.data.settings.soundVolume);
+    }
+
+    private void PlaySound(int arg0) => SoundManager.Instance.PlaySoundEffect(SoundManager.Instance.soundEffect);
 
     private void DisplayPlayerName()
     {
@@ -51,7 +61,7 @@ public class MainManager : MonoBehaviour
     private void DisplayHighScore()
     {
         ScoreData highScore = PersistenceData.Instance.GetHighScore();
-
+        
         bestScoreText.text = $"Best score <b>{highScore.name} {highScore.score}";
     }
 
